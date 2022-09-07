@@ -1,0 +1,2 @@
+#!/bin/bash
+sort -b /tmp/line | uniq -c | sort -r | head -11 | cut -b 9-
