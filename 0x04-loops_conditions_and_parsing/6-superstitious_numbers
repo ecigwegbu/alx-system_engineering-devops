@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# This script prints superstitious numbers using while loop
+# includes exceptions and uses case
+
+i=0
+while [ $i -lt 20 ]; do
+
+	i=$(("$i+1"))
+
+	case $i in
+
+	4)
+		echo $i
+		echo "bad luck from China"
+		;;
+	9)
+		echo $i
+		echo "bad luck from Japan"
+		;;
+	17)
+		echo $i
+		echo "bad luck from Italy"
+		;;
+	*)
+		echo $i
+		;;
+	esac
+done
