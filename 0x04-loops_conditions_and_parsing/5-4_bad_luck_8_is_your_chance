@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script prints 'best school' ten times using while loop
+# includes exceptions
+
+i=0
+while [ $i -lt 10 ]; do
+	i=$(("$i+1"))
+	if [ $i -eq 4 ]; then
+		echo "bad luck"
+	elif [ $i -eq 8 ]; then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi	
+done
