@@ -4,7 +4,7 @@
 
 hour=0
 
-while [ $hour -lt 12 ]; do
+while [ $hour -lt 13 ]; do
 
 	min=0
 	while [ $min -lt 60 ]; do
