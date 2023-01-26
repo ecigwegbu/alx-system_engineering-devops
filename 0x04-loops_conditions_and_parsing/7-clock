@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# This script prints superstitious numbers using while loop
+# includes exceptions and uses case
+
+hour=0
+
+while [ $hour -lt 12 ]; do
+
+	min=0
+	while [ $min -lt 60 ]; do
+
+		# min=$(("$min+1"))
+
+		case $min in
+
+		0)
+			echo "Hour: "$hour
+			;;
+		*)
+			echo $min
+			;;
+		esac
+		min=$(("$min+1"))
+	done
+
+	hour=$(("hour+1"))
+done
