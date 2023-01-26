@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # This script prints file names using ls and cut
 
-for file in *-*; do
-	echo "$file" | cut -d- -f 2
+for file in $(ls -1); do
+	echo "$file" | cut -sd- -f 2
 done
