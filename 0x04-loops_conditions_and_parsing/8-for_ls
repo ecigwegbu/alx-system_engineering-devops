@@ -2,5 +2,5 @@
 # This script prints file names using ls and cut
 
 for file in *-*; do
-	echo "$file" | cut -d- -f 2  || break
+	echo "$file" | cut -d- -f 2
 done
