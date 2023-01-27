@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# display to infinity and beyond waiting 2 secs in between, indefinitely
+
+kill "$(pgrep -f './4-to_infinity_and_beyond')"
