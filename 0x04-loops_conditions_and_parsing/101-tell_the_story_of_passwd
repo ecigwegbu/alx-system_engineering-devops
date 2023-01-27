@@ -4,13 +4,9 @@
 while IFS= read -r line; do
 	#echo "$line" | cut -d':' -f 1,3,6
 	myUserName=$(cut -d':' -f 1)
-	myUserPasswd=$(cut -d':' -f 2)
-	myUserID=$(cut -d':' -f 3)
 	myUserGID=$(cut -d':' -f 4)
-	myUserGeko=$(cut -d':' -f 5)
-	myUserHome=$(cut -d':' -f 6)
-	myUserShell=$(cut -d':' -f 7)
-	echo The user ${myUserName} is oart of the ${myUserGID} gang.
+	echo The user "${myUserName}" is part of the "${myUserGID}" gang.
+	export line
 done < "/etc/passwd"
 
 
