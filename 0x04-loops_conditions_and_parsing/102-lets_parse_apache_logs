@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# This script prints fields from /etc/passwd file
+#PLACEHOLDER - for update
+
+while IFS= read -r line; do
+	#echo "$line" | cut -d':' -f 1,3,6
+	myUserName=$(cut -d':' -f 1)
+	myUserGID=$(cut -d':' -f 4)
+	echo The user "${myUserName}" is part of the "${myUserGID}" gang.
+	export line
+done < "/etc/passwd"
+
+
+
+#printf "%s\n" The user "$myUserName" is part of the "$myUserGID" gang, lives in "$myUserHome" and rides "$myUserShell". "$myUserID"\'s place is protected by the passcode "$myUserPasswd", more info about the user here: "$myUserGeko"
