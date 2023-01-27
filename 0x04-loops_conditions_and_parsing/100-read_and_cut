@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# This script prints fields from /etc/passwd file
+
+while IFS= read -r line; do
+	echo "$line" | cut -d':' -f 1,3,6
+done < "/etc/passwd"
