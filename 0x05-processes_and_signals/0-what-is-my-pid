@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Show my process id
+
+pgrep -f "$0"
