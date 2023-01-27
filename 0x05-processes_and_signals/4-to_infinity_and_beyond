@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# display to infinity and beyond waiting 2 secs in between, indefinitely
+
+while true; do
+	echo "To infinity and beyond"
+	sleep 2
+done
