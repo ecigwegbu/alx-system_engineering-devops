@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Show all running processes in user-oriented format, show process hierarchy
 
-ps axu
+ps -eH xu --forest
 
 
