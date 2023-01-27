@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # This script prints file names using ls and cut
 
+#for file in "./*-*"; do
 for file in ./[!.]*; do
-	echo "$file" | cut --complement -sd- -f 1
+	echo "$file" | cut --complement -sd'-' -f 1
 done
