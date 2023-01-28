@@ -2,17 +2,22 @@
 # This script does the following:
 # manages my rocess
 
-if [ "$#" -ne 2 ] || ([ "$1" -ne "start" ]\
-	&& [ "$1" -ne "stop" ]\
-	&& [ "$1" -ne "restart" ]); then
+if [ "$#" -ne 2 ] && { [ "$1" != "start" ]\
+	&& [ "$1" != "stop" ]\
+	&& [ "$1" != "restart" ]; }; then
 	echo "Usage: manage_my_process {start|stop|restart}"
+	exit 1
 fi
+
 pgrep -f "$0" > /var/run/my_process.pid
 
-if [ "$1" -eq "start" ]; then
+if [ "$1" = "start" ]; then
 	# do start
-elif [ "$1" -eq "stop" ]; then
+	echo "starting..."
+elif [ "$1" = "stop" ]; then
 	# do stop
-elif [ "$1" -eq "stop" ]; then
+	echo "stopping..."
+elif [ "$1" = "restart" ]; then
 	# do restart
+	echo "restarting..."
 fi
