@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# listen on portt 98
+echo "Listening on port 98 on localhost...:)"
