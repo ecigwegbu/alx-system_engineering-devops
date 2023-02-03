@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# modify hosts file resolution
+# show attached IP addresses
 
 cp /etc/hosts ~/hosts.new
 
