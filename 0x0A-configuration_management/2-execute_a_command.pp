@@ -1,4 +1,4 @@
 # This puppet manifest kills a process
 exec { 'killmenow':
-  command => 'pkill --signal 9 killmenow'
+  command => 'pkill -u root --signal 9 killmenow'
 }
