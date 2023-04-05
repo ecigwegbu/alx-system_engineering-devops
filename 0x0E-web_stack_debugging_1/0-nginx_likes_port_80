@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Debug my web service
+
+sudo apt update
+sudo apt -y upgrade
+sudo apt-get install nginx -y
+nginx -v
+
+sudo service nginx start
+# sudo service nginx enable
+
+# configure firewall
+sudo apt install -y ufw
+#sudo ufw default deny incoming
+#sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw allow 22
+sudo ufw allow http
+sudo ufw allow 80
+sudo ufw allow https
+sudo ufw allow 443
+sudo ufw allow 5000
+sudo ufw enable --force
+
+
