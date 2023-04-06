@@ -11,13 +11,17 @@ ufw default allow outgoing
 ufw allow 22/tcp
 ufw allow 80/tcp
 ufw --force enable
-echo "Ceci n'est pas une page." > /var/www/html/error404.html
+echo "Ceci n'est pas une page." > /usr/share/nginx/html/error404.html
 
 # add redirect line
 line1="\tserver_name _;"
 line2="\terror_page 404 \/error404.html;"
+line3="\tlocation = \/error404.html {"
+line4="\t\troot \/usr\/share\/nginx\/html;"
+line5="\t\tinternal;"
+line6="\t}"
 # line2="\trewrite \/redirect_me https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;"
-sed -i "s/^[[:blank:]]server_name _;/$line1\n$line2/" \
+sed -i "s/^[[:blank:]]server_name _;/$line1\n$line2\n$line3\n$line4\n$line5\n$line6/" \
 	/etc/nginx/sites-enabled/default
 
 service nginx reload
