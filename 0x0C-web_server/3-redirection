@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # install nginx on a new ubuntu server
 
 sudo su
