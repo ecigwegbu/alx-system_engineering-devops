@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
 # install nginx on a new ubuntu server
 
-sudo apt update
-sudo install -y nginx
-sudo apt install -y ufw
-sudo ufw default incoming allow
-sudo ufw default outgoing allow
-sudo ufw allow ssh
-sudo ufw allow 22
-sudo ufw allow http
-sudo ufw allow 80
-sudo ufw enable
-sudo service nginx reload
-sudo echo "Hello World!" > /var/www/html/index.html
+sudo su
+apt update
+apt install -y nginx
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw --force enable
+echo "Hello World!" > /var/www/html/index.html
+service nginx reload
+exit
