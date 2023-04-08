@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 # Debug my nginx web server to listen on port 80
+sudo su
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+apt update
+apt upgrade -y
+apt install -y ufw
+ufw allow 80:/tcp
+ufw enable
 sed -i 's/listen 8080/listen 80/' \
         /etc/nginx/sites-enabled/default
-sudo service nginx reload
+service nginx restart
+exit
