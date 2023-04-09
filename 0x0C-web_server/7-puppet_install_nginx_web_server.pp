@@ -1,13 +1,8 @@
-# Puppet Manaifest to install nginx
+# Puppet Manifest to install nginx
 
 
 #!/usr/bin/env bash
 # install nginx on a new ubuntu server
-
-#sudo su
-exec { 'sudo su':
-  command => '/usr/bin/sudo su'
-}
 
 #apt update
 exec { 'apt_update':
@@ -19,7 +14,6 @@ package { 'nginx':
   ensure   => installed,
   provider => '/usr/bin/apt',
 }
-
 
 # Hello World file
 file { '/var/www/html/index.html':

@@ -12,9 +12,6 @@ ufw allow 80/tcp
 ufw --force enable
 echo "Hello World!" > /var/www/html/index.html
 
-# First, remove any previous redirect:
-sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
-        /etc/nginx/sites-enabled/default
 # add redirect line
 line1="\tserver_name _;"
 line2="\trewrite \/redirect_me"
