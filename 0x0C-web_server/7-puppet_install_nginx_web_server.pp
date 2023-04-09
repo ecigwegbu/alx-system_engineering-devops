@@ -99,3 +99,22 @@ package { 'flask':
 exec { 'killmenow':
   command => '/usr/bin/pkill -u root killmenow'
 }
+
+
+
+#!/usr/bin/env bash
+# install nginx on a new ubuntu server
+
+sudo su
+apt update
+apt install -y nginx
+service nginx start
+apt install -y ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw --force enable
+echo "Hello World!" > /var/www/html/index.html
+service nginx reload
+exit
