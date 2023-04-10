@@ -19,7 +19,7 @@ sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
 line1="\tserver_name _;"
 line2="\trewrite \/redirect_me"
 newurl="https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4"
-sed -i --follow-symlinks "s/^[[:blank:]]server_name _;/$line1\n$line2 $newurl permanent;/" \
+sed -i --follow-symlinks "s/^\s*server_name _;/$line1\n$line2 $newurl permanent;/" \
         /etc/nginx/sites-enabled/default
 
 service nginx restart
