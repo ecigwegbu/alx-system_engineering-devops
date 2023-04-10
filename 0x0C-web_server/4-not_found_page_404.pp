@@ -13,7 +13,7 @@ exec { '404_not_found':
         location = \/error404.html \{\n\
                 root \/usr\/share\/nginx\/html;\n\
                 internal;\n\
-                \}/" \
+        \}/" \
     /etc/nginx/sites-enabled/default',
   notify  => Service['nginx'],
 }
