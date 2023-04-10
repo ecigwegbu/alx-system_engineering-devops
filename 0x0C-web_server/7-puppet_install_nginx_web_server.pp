@@ -18,7 +18,7 @@ package { 'nginx':
 file { '/var/www/html/index.html':
   path    => '/var/www/html/index.html',
   mode    => '0644',
-  content => 'Hello World!',
+  content => 'Hello World!\n',
   notify  => Service['nginx'],
 }
 
@@ -63,12 +63,10 @@ exec { 'sed_rem_prev_redirect':
 }
 
 # Redirection - 301
-$rline1="\tserver_name _;
-	rewrite /redirect_me"
-$newurl='https://www.youtube.com/watch?v=QH2-TGUlwu4'
 exec { 'sed_redirection_301':
   command => '/usr/bin/sed -i --follow-symlinks \
-    "s/^[[:blank:]]server_name _;/$rline1 $newurl permanent;/" \
+    "s/^\s*server_name _;/\tserver_name _;\n\trewrite \/redirect_me \
+     https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/" \
     /etc/nginx/sites-enabled/default',
   require => Exec['sed_rem_prev_redirect'],
 }
@@ -80,14 +78,13 @@ file { '/usr/share/nginx/html/error404.html':
   content => "Ceci n'est pas une page",
   notify  => Exec['404_not_found'],
 }
-$newline="\tserver_name _;
-	error_page 404 /error404.html;
-	location = /error404.html {
-		root /usr/share/nginx/html;
-		internal;
-		}"
 exec { '404_not_found':
-  command => '/usr/bin/sed -i "s/^[[:blank:]]server_name _;/$newline/" \
+  command => '/usr/bin/sed -i --follow-symlinks "s/^\s*server_name _;/\tserver_name _;\n\
+        error_page 404 \/error404.html;\n\
+        location = \/error404.html \{\n\
+                root \/usr\/share\/nginx\/html;\n\
+                internal;\n\
+                \}/" \
     /etc/nginx/sites-enabled/default',
   notify  => Service['nginx'],
 }

@@ -44,16 +44,6 @@ server {
 	index index.html index.htm index.nginx-debian.html;
 
 	server_name _;
-        error_page 404 /error404.html;
-        location = /error404.html {
-                root /usr/share/nginx/html;
-                internal;
-                }
-        error_page 404 /error404.html;
-        location = /error404.html {
-                root /usr/share/nginx/html;
-                internal;
-                }
 
 	location / {
 		# First attempt to serve request as file, then
