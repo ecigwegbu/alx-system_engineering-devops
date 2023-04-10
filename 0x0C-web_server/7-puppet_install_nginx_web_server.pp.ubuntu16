@@ -4,14 +4,21 @@
 #apt update
 exec { 'apt_update':
   command => '/usr/bin/apt update',
+  notify  => Exec['apt_upgrade'],
+}
+
+#apt upgrade
+exec { 'apt_upgrade':
+  command => '/usr/bin/apt upgrade -y',
   notify  => Package['nginx'],
 }
 
 # apt install -y nginx
 package { 'nginx':
-  ensure   => installed,
-  provider => 'apt',
-  notify   => File['/var/www/html/index.html'],
+  ensure    => installed,
+  provider  => 'apt',
+  notify    => File['/var/www/html/index.html'],
+  subscribe => Exec['sed_redirection_301'],
 }
 
 # Hello World file
@@ -32,41 +39,47 @@ service { 'nginx':
 package { 'ufw':
   ensure   => installed,
   provider => 'apt',
+  notify   => Exec['ufw_def_incoming'],
 }
 
 # ufw incoming
 exec { 'ufw_def_incoming':
   command => '/usr/sbin/ufw default deny incoming',
+  notify  => Exec['ufw_def_outgoing'],
 }
 # ufw outgoing
 exec { 'ufw_def_outgoing':
   command => '/usr/sbin/ufw default allow outgoing',
+  notify  => Exec['ufw_port22'],
 }
 
-# ufw port 22 
+# ufw port 22
 exec { 'ufw_port22':
   command => '/usr/sbin/ufw allow 22/tcp',
+  notify  => Exec['ufw_port80'],
 }
-# ufw port 80 
+# ufw port 80
 exec { 'ufw_port80':
   command => '/usr/sbin/ufw allow 80/tcp',
+  notify  => Exec['ufw_enable'],
 }
-# ufw enable 
+# ufw enable
 exec { 'ufw_enable':
   command => '/usr/sbin/ufw --force enable',
+  notify  => Exec['sed_rem_prev_redirect'],
 }
 
 # First, remove any previous redirect:
 exec { 'sed_rem_prev_redirect':
-  command => '/usr/bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
+  command => '/bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
     /etc/nginx/sites-enabled/default',
+  notify  => Exec['sed_redirection_301'],
 }
 
 # Redirection - 301
 exec { 'sed_redirection_301':
-  command => '/usr/bin/sed -i --follow-symlinks \
+  command => '/bin/sed -i --follow-symlinks \
     "s/^\s*server_name _;/\tserver_name _;\n\trewrite \/redirect_me \
 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/" \
     /etc/nginx/sites-enabled/default',
-  require => Exec['sed_rem_prev_redirect'],
 }
