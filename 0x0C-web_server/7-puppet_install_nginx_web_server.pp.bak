@@ -58,8 +58,7 @@ exec { 'ufw_enable':
 
 # First, remove any previous redirect:
 exec { 'sed_rem_prev_redirect':
-  command => '/usr/bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
-    /etc/nginx/sites-enabled/default',
+  command => '/usr/bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" /etc/nginx/sites-enabled/default',
 }
 
 # Redirection - 301
@@ -67,8 +66,8 @@ $rline1="\tserver_name _;
 	rewrite /redirect_me"
 $newurl='https://www.youtube.com/watch?v=QH2-TGUlwu4'
 exec { 'sed_redirection_301':
-  command => '/usr/bin/sed -i --follow-symlinks \
-    "s/^[[:blank:]]server_name _;/$rline1 $newurl permanent;/" \
+  command => '/usr/bin/sed -i --follow-symlinks 
+    "s/^[[:blank:]]server_name _;/$rline1 $newurl permanent;/"
     /etc/nginx/sites-enabled/default',
   require => Exec['sed_rem_prev_redirect'],
 }
@@ -87,7 +86,6 @@ $newline="\tserver_name _;
 		internal;
 		}"
 exec { '404_not_found':
-  command => '/usr/bin/sed -i "s/^[[:blank:]]server_name _;/$newline/" \
-    /etc/nginx/sites-enabled/default',
+  command => '/usr/bin/sed -i "s/^[[:blank:]]server_name _;/$newline/" etc/nginx/sites-enabled/default',
   notify  => Service['nginx'],
 }
