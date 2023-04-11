@@ -1,22 +1,37 @@
 #!/usr/bin/env bash
 # install nginx on a new ubuntu server, with custom nginx header and haproxy
 
+echo Running Update and Upgrade... && echo
 apt update && apt upgrade -y
+
+echo Acquiring Haproxy repo... && echo
 apt-get install --no-install-recommends software-properties-common
 add-apt-repository ppa:vbernat/haproxy-2.0
+
+echo Installing HAProxy 2.0... && echo
 apt-get install haproxy=2.0.\*
+
 haproxy -v
+echo Installation done. && echo
+echo Running Update and Upgrade again...
 apt update && apt upgrade -y
 
-#apt install -y nginx
-#service nginx start
-#apt install -y ufw
-#ufw default deny incoming
-#ufw default allow outgoing
-#ufw allow 22/tcp
-#ufw allow 80/tcp
-#ufw --force enable
-#echo "Hello World!" > /var/www/html/index.html
+# ensure HAproxy can be managed via an init script
+echo "ENABLED=1" >> /etc/default/haproxy
+export HAPROXY_CFG=1
 
-#service nginx restart
-~
+# configure haproxy:
+echo "
+frontend myfrontend
+  bind 0.0.0.0:80
+  default_backend myservers
+
+backend myservers
+  balance roundrobin
+  server web-01 158178-web-01:80 check
+  server web-02 158178-web-02:80 check
+" >> /etc/haproxy/haproxy.cfg
+
+service haproxy reload
+
+echo '--- END OF SCRIPT ---'
