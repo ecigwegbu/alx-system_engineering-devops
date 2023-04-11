@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# install nginx on a new ubuntu server, with custom nginx header and haproxy
+
+apt update
+apt install -y nginx
+service nginx start
+apt install -y ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow 22/tcp
+ufw allow 80/tcp
+ufw --force enable
+echo "Hello World!" > /var/www/html/index.html
+
+# First, remove any previous redirect:
+sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
+        /etc/nginx/sites-enabled/default
+# add redirect line
+line1="\tserver_name _;"
+line2="\trewrite \/redirect_me"
+newurl="https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4"
+sed -i --follow-symlinks "s/^\s*server_name _;/$line1\n$line2 $newurl permanent;/" \
+        /etc/nginx/sites-enabled/default
+
+# First, remove any previous custom response header:
+sed -i --follow-symlinks "s/^\s*add_header X-Served-By.*$//g" \
+        /etc/nginx/sites-enabled/default
+# add header
+line1="\tserver_name _;"
+line2="\tadd_header X-Served-By"
+value="$(hostname)"
+sed -i --follow-symlinks "s/^\s*server_name _;/$line1\n$line2 $value always;/" \
+        /etc/nginx/sites-enabled/default
+service nginx restart
