@@ -1,1 +1,6 @@
-#0. Give me a page!
+#!/usr/bin/env bash
+# Debug apache2 server on docker container
+sudo apt update
+sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo service apache2 start
