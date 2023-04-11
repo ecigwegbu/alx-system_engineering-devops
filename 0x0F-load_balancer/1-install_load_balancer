@@ -18,7 +18,11 @@ apt update && apt upgrade -y
 
 # ensure HAproxy can be managed via an init script
 echo "ENABLED=1" >> /etc/default/haproxy
-export HAPROXY_CFG=1
+
+# configure /etc/hosts
+echo "35.175.135.222 158178-web-01 web-01" >> /etc/hosts
+echo "52.3.240.190 158178-web-02 web-02" >> /etc/hosts
+echo "54.237.11.232 158178-lb-01 lb-01" >> /etc/hosts
 
 # configure haproxy:
 echo "
