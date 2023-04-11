@@ -5,11 +5,11 @@ echo Running Update and Upgrade... && echo
 apt update && apt upgrade -y
 
 echo Acquiring Haproxy repo... && echo
-apt-get install --no-install-recommends software-properties-common
-add-apt-repository ppa:vbernat/haproxy-2.0
+apt-get install --no-install-recommends software-properties-common -y
+add-apt-repository ppa:vbernat/haproxy-2.0 -y
 
 echo Installing HAProxy 2.0... && echo
-apt-get install haproxy=2.0.\*
+apt-get install haproxy=2.0.\* -y
 
 haproxy -v
 echo Installation done. && echo
