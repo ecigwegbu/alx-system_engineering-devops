@@ -1,11 +1,16 @@
 #ssh client configuration using puppet
 
-exec { 'edit_ssh_config':
-  command => "/usr/bin/echo '    IdentityFile ~/.ssh/school' >> '/etc/ssh/ssh_config';
-              /usr/bin/echo '    PasswordAuthentication no' >> '/etc/ssh/ssh_config' ",
-  notify  => Service['ssh']
+#ssh client configuration
+# PasswordAuthentication no
+# IdentityFile ~/.ssh/school
+
+file { '/etc/ssh/ssh_config.d/school.conf':
+  ensure  => file,
+  content => "\nPasswordAuthentication no\nIdentityFile ~/.ssh/school\n",
+  notify  => Service['ssh'],
 }
+
 service { 'ssh':
-  ensure => running,
-  enable => true
+  ensure    => running,
+  enable    => true,
 }
