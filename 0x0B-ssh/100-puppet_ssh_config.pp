@@ -4,7 +4,7 @@
 # PasswordAuthentication no
 # IdentityFile ~/.ssh/school
 
-file { '/etc/ssh/ssh_config.d/school.conf':
+file { '/etc/ssh/ssh_config':
   ensure  => file,
   content => "\nPasswordAuthentication no\nIdentityFile ~/.ssh/school\n",
   notify  => Exec['ssh_reload'],
