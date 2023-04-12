@@ -7,10 +7,9 @@
 file { '/etc/ssh/ssh_config.d/school.conf':
   ensure  => file,
   content => "\nPasswordAuthentication no\nIdentityFile ~/.ssh/school\n",
-  notify  => Service['ssh'],
+  notify  => Exec['ssh_reload'],
 }
 
-service { 'ssh':
-  ensure    => running,
-  enable    => true,
+exec { 'ssh_reload':
+  command => '/usr/sbin/service ssh reload'
 }
