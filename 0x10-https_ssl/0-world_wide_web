@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Bash script to configure web servers
+
+# ARGV:
+DOMAIN=$1
+SUBDOMAIN=$2
+
+function print_info () {
+	dig "$SUBDOMAIN.$DOMAIN" | awk -v domain="$DOMAIN" -v subdomain="$SUBDOMAIN"\
+		-v subpattern="^$SUBDOMAIN.$DOMAIN" '($0 ~ subpattern) &&\
+		/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$/ { print "The subdomain "\
+		subdomain " is a " $4 " record and points to " $5 }'
+}
+
+
+if [ "$SUBDOMAIN" ]; then
+	print_info
+else
+	for sub in "www" "lb-01" "web-01" "web-02"; do
+		SUBDOMAIN=$sub
+		print_info
+	done
+fi

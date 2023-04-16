@@ -1,0 +1,20 @@
+
+; <<>> DiG 9.18.1-1ubuntu1.3-Ubuntu <<>> www.igwegbu.tech
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 28967
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;www.igwegbu.tech.		IN	A
+
+;; ANSWER SECTION:
+www.igwegbu.tech.	225	IN	A	54.237.11.232
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Sun Apr 16 02:11:32 WAT 2023
+;; MSG SIZE  rcvd: 61
+
