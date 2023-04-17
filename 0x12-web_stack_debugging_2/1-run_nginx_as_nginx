@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# run nginx as nginx
+
+# create user nginx
+if [ $(grep nginx /etc/passwd) ]; then
+        sudo useradd nginx 2> /dev/null
+fi
+
+# change nginx user from www-data to nginx
+# sudo sed -i -E "s/^user .*$/user nginx/" /etc/nginx/nginx.conf
+sudo sed -i "s/^user .*$/user nginx;/" /etc/nginx/nginx.conf
+
+# change the port nginx is listening on
+# sudo sed -i -E 's/ 80 default_server;/ 8080 default_server;/g' /etc/nginx/sites-enabled/default
+sudo sed -i 's/ 80 default_server;/ 8080 default_server;/g' /etc/nginx/sites-enabled/default
+# sudo sed -i -E 's/:80 default_server;/:8080 default_server;/g' /etc/nginx/sites-enabled/default
+sudo sed -i 's/:80 default_server;/:8080 default_server;/g' /etc/nginx/sites-enabled/default
+sudo nginx -t
