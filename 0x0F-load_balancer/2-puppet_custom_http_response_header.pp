@@ -11,7 +11,7 @@ exec { 'apt_update':
 package { 'nginx':
   ensure   => installed,
   provider => 'apt',
-  notify   => Service['nginx'],
+  notify   => Package['ufw'],
 }
 
 # apt install -y ufw
@@ -58,14 +58,14 @@ file { '/var/www/html/index.html':
 
 # First, remove any previous redirect:
 exec { 'sed_rem_prev_redirect':
-  command => '//bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
+  command => '/bin/sed -i --follow-symlinks "s/^\s*rewrite \/redirect_me.*$//g" \
     /etc/nginx/sites-enabled/default',
   notify  => Exec['sed_redirection_301'],
 }
 
 # Redirection - 301
 exec { 'sed_redirection_301':
-  command => '//bin/sed -i --follow-symlinks \
+  command => '/bin/sed -i --follow-symlinks \
     "s/^\s*server_name _;/\tserver_name _;\n\trewrite \/redirect_me \
 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/" \
     /etc/nginx/sites-enabled/default',
@@ -74,14 +74,14 @@ https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4 permanent;/" \
 
 # First, remove any previous custom response header:
 exec { 'sed_rem_prev_header':
-  command => '//bin/sed -i --follow-symlinks "s/^\s*add_header X-Served-By.*$//g" \
+  command => '/bin/sed -i --follow-symlinks "s/^\s*add_header X-Served-By.*$//g" \
     /etc/nginx/sites-enabled/default',
   notify  => Exec['sed_add_header'],
 }
 
 # add custom header 
 exec { 'sed_add_header':
-  command => '//bin/sed -i --follow-symlinks \
+  command => '/bin/sed -i --follow-symlinks \
     "s/^\s*server_name _;/\tserver_name _;\n\tadd_header X-served-By $(hostname);/" \
     /etc/nginx/sites-enabled/default',
   notify  => Service['nginx'],
