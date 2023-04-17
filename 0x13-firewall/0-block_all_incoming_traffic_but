@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# configure furewall
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y ufw
+sudo ufw default incoming deny
+sudo ufw default outgoing allow
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+sudo ufw --force enable
