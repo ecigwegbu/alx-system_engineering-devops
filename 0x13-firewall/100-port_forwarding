@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# configure furewall
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y ufw
+sudo ufw default incoming deny
+sudo ufw default outgoing allow
+sudo ufw allow 22/tcp
+sudo ufw allow 443/tcp
+sudo ufw allow 80/tcp
+
+#Use .. | sudo tee -a file
+sudo ufw allow 8080/tcp
+echo 'net/ipv4/ip_forward=1' | sudo tee -a /etc/ufw/sysctl.conf
+echo '*nat' | sudo tee -a /etc/ufw/before.rules
+echo ':PREROUTING ACCEPT [0:0]' | sudo tee -a /etc/ufw/before.rules
+echo '-A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80' | sudo tee -a /etc/ufw/before.rules
+echo 'COMMIT' | sudo tee -a /etc/ufw/before.rules
+
+sudo ufw reload
+sudo ufw --force enable
