@@ -5,3 +5,4 @@
 
 # mysqldump [OPTIONS] --all-databases [OPTIONS]
 mysqldump --user=root --password="$1" --all-databases > backup.sql
+tar -czf "$(date +'%d-%m-%Y')".tar.gz backup.sql
