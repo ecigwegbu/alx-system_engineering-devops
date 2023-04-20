@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# backup mysql database
+
+# $1 is the dummy mysql passwd for root
+
+# mysqldump [OPTIONS] --all-databases [OPTIONS]
+mysqldump --user=root --password="$1" --all-databases > backup.sql
