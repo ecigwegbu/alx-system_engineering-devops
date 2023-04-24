@@ -31,7 +31,7 @@ if __name__ == "__main__":
             compl_tasks.append(response_json[task]["title"])
             completed += 1
 
-    print("Employee {} is done with tasks ({}/{}):". format(
+    print("Employee {} is done with tasks({}/{}):". format(
           user_name, str(completed), str(total_tasks)))
     for item in compl_tasks:
         print("\t {}".format(item))
