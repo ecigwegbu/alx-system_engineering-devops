@@ -26,9 +26,9 @@ if __name__ == "__main__":
 
     completed = 0
     compl_tasks = []
-    for task in response_json:
-        if task['completed'] is True:
-            compl_tasks.append(task["title"])
+    for task in range(len(response_json)):
+        if response_json[task]['completed'] is True:
+            compl_tasks.append(response_json[task]["title"])
             completed += 1
 
     print("Employee {} is done with tasks({}/{}):". format(

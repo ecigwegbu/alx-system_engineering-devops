@@ -35,3 +35,8 @@ if __name__ == "__main__":
           user_name, str(completed), str(total_tasks)))
     for item in compl_tasks:
         print("\t {}".format(item))
+
+    csv_str = ""
+    for task in response_json:
+        print('"{}","{}","{}","{}"'.format(
+             str(user_id), user_name, status, title))
