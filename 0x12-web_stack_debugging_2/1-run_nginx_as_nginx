@@ -1,18 +1,34 @@
 #!/usr/bin/env bash
 # run nginx as nginx
 
+# First stop the web server
+sudo service stop nginx
+sudo pkill nginx
+
 # create user nginx
-if [ $(grep nginx /etc/passwd) ]; then
+if [ "!$(grep -q nginx /etc/passwd)" ]; then
         sudo useradd nginx 2> /dev/null
 fi
 
 # change nginx user from www-data to nginx
-# sudo sed -i -E "s/^user .*$/user nginx/" /etc/nginx/nginx.conf
-sudo sed -i "s/^user .*$/user nginx;/" /etc/nginx/nginx.conf
+# sudo sed -i "s/^user .*$/user nginx;/" /etc/nginx/nginx.conf
+
+# change the pid file path
+sudo mkdir /run/nginx
+sudo sed -i "s/^pid .*$/pid \/run\/nginx\/nginx\.pid;/" /etc/nginx/nginx.conf
+
+# change permissions for var, share and run diresctories:
+chown -R nginx:nginx /var/log/nginx /usr/share/nginx /run/nginx
 
 # change the port nginx is listening on
-# sudo sed -i -E 's/ 80 default_server;/ 8080 default_server;/g' /etc/nginx/sites-enabled/default
 sudo sed -i 's/ 80 default_server;/ 8080 default_server;/g' /etc/nginx/sites-enabled/default
-# sudo sed -i -E 's/:80 default_server;/:8080 default_server;/g' /etc/nginx/sites-enabled/default
 sudo sed -i 's/:80 default_server;/:8080 default_server;/g' /etc/nginx/sites-enabled/default
-sudo nginx -t
+
+# edit the nginx.service file
+sudo sed -i "s/^PIDFile= .*$/\#PIDFile=\/run\/nginx\.pid/" /usr/lib/systemd/system/nginx.service 
+sudo systemctl daemon-reload
+
+sudo nginx -T > nginx_config2  # test and dump config files
+
+sudo su -c '/usr/sbin/nginx' nginx # will match check but daemon will not run
+# sudo systemctl start nginx # alternative
