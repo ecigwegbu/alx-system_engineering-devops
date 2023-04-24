@@ -2,32 +2,41 @@
 """ Gather data from an API"""
 import json
 import requests
-import sys
 
 if __name__ == "__main__":
 
-    user_id = sys.argv[1]
-
     # fetch user details
-    url = "https://jsonplaceholder.typicode.com/users/{}".format(
-        str(user_id))
+    url = "https://jsonplaceholder.typicode.com/users/"
     response = requests.get(url)
-    response_json = json.loads(response.text)
-    employee_name = response_json['name']
-    user_name = response_json['username']
+    users = json.loads(response.text)  # resp_json ie lst of dicts;dict=user
 
-    # fetch tasks completed
-    url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(
-        str(user_id))
+    # fetch tasks
+    url = "https://jsonplaceholder.typicode.com/todos"
     response = requests.get(url)
-    response_json = json.loads(response.text)  # list of tasks (task = dict)
+    tasks = json.loads(response.text)  # resp_json=list of tasks (task = dict)
+
+    # all_tasks_json = {str(user_id): [{"task": task["title"],
+    #              "completed": task["completed"], "username": user_name}
+    #                             for task in response_json]}
+
+    # user_id = user["id"]
+    # task_title = tasks[task]["title"]
+    # task_completed = tasks[task]["completed"]
+    # user_name = users[user]["username"]
+    # build json dictionary for all users
+    # [task for task in tasks if task["userId"]==1]
 
     # build json dictionary
-    tasks_json = {str(user_id): [{"task": task["title"],
-                  "completed": task["completed"], "username": user_name}
-                                 for task in response_json]}
+    all_tasks_json = {
+        str(user["id"]): [{"task": task["title"],
+                           "completed": task["completed"],
+                           "username": user["username"]}
+                          for task in [task for task in tasks
+                          if task["userId"] == user["id"]]]
 
+        for user in users
+    }
     # write string to disk
-    filename = "{}.json".format(str(user_id))
+    filename = "todo_all_employees.json"
     with open(filename, "w") as file:
-        json.dump(tasks_json, file)
+        json.dump(all_tasks_json, file)
