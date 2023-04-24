@@ -8,35 +8,28 @@ if __name__ == "__main__":
 
     user_id = sys.argv[1]
 
-    # fetch user name
+    # fetch user details
     url = "https://jsonplaceholder.typicode.com/users/{}".format(
         str(user_id))
     response = requests.get(url)
     response_json = json.loads(response.text)
-    user_name = response_json['name']
-    # print("Employee Name: {}".format(user_name))
+    employee_name = response_json['name']
+    user_name = response_json['username']
 
     # fetch tasks completed
     url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(
         str(user_id))
     response = requests.get(url)
-    response_json = json.loads(response.text)
-    total_tasks = len(response_json)
-    # print("Response_json: \n", response_json)
+    response_json = json.loads(response.text)  # list of tasks (task = dict)
 
-    completed = 0
-    compl_tasks = []
-    for task in range(len(response_json)):
-        if response_json[task]['completed'] is True:
-            compl_tasks.append(response_json[task]["title"])
-            completed += 1
-
-    print("Employee {} is done with tasks({}/{}):". format(
-          user_name, str(completed), str(total_tasks)))
-    for item in compl_tasks:
-        print("\t {}".format(item))
-
+    # build csv string
     csv_str = ""
     for task in response_json:
-        print('"{}","{}","{}","{}"'.format(
-             str(user_id), user_name, status, title))
+        #  if task['completed'] is True:
+        csv_str += '"{}","{}","{}","{}"\n'.format(
+            str(user_id), user_name, task["completed"], task["title"])
+
+    # write string to disk
+    filename = "{}.csv".format(str(user_id))
+    with open(filename, "w") as file:
+        file.write(csv_str)
