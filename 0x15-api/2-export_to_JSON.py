@@ -8,30 +8,26 @@ if __name__ == "__main__":
 
     user_id = sys.argv[1]
 
-    # fetch user name
+    # fetch user details
     url = "https://jsonplaceholder.typicode.com/users/{}".format(
         str(user_id))
     response = requests.get(url)
     response_json = json.loads(response.text)
-    user_name = response_json['name']
-    # print("Employee Name: {}".format(user_name))
+    employee_name = response_json['name']
+    user_name = response_json['username']
 
     # fetch tasks completed
     url = "https://jsonplaceholder.typicode.com/users/{}/todos".format(
         str(user_id))
     response = requests.get(url)
-    response_json = json.loads(response.text)
-    total_tasks = len(response_json)
-    # print("Response_json: \n", response_json)
+    response_json = json.loads(response.text)  # list of tasks (task = dict)
 
-    completed = 0
-    compl_tasks = []
-    for task in response_json:
-        if task['completed'] is True:
-            compl_tasks.append(task["title"])
-            completed += 1
+    # build json dictionary
+    tasks_json = {str(user_id): [{"task": task["title"],
+                  "completed": task["completed"], "username": user_name}
+                                 for task in response_json]}
 
-    print("Employee {} is done with tasks({}/{}):". format(
-          user_name, str(completed), str(total_tasks)))
-    for item in compl_tasks:
-        print("\t {}".format(item))
+    # write string to disk
+    filename = "{}.json".format(str(user_id))
+    with open(filename, "w") as file:
+        json.dump(tasks_json, file)
