@@ -15,17 +15,6 @@ if __name__ == "__main__":
     response = requests.get(url)
     tasks = json.loads(response.text)  # resp_json=list of tasks (task = dict)
 
-    # all_tasks_json = {str(user_id): [{"task": task["title"],
-    #              "completed": task["completed"], "username": user_name}
-    #                             for task in response_json]}
-
-    # user_id = user["id"]
-    # task_title = tasks[task]["title"]
-    # task_completed = tasks[task]["completed"]
-    # user_name = users[user]["username"]
-    # build json dictionary for all users
-    # [task for task in tasks if task["userId"]==1]
-
     # build json dictionary
     all_tasks_json = {
         str(user["id"]): [{"task": task["title"],
