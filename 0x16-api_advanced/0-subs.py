@@ -13,6 +13,6 @@ you are not following redirects
 import Requests
 
 
-def top_ten(subreddit):
+def number_of_subscribers(subreddit):
     """Read data from reddit API"""
     pass
