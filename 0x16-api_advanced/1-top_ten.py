@@ -1,18 +1,39 @@
 #!/usr/bin/python3
-"""Write a function that queries the Reddit API and prints the titles of the
-first 10 hot posts listed for a given subreddit.
-
-Requirements:
-
-Prototype: def top_ten(subreddit)
-If not a valid subreddit, print None.
-NOTE: Invalid subreddits may return a redirect to search results. Ensure that
-you are not following redirects
-"""
-
-import Requests
+""" Read data from the reddit API. """
+import json
+import requests
 
 
-def number_of_subscribers(subreddit):
-    """Read data from reddit API"""
-    pass
+def top_ten(subreddit):
+    """ Queries the Reddit API and returns the number of subscribers """
+    headers = {'User-Agent': 'alx2-web-app'}
+
+    #  GET [/r/subreddit]/hot
+    url = f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10'
+    res = requests.get(url, headers=headers, allow_redirects=False)
+    if res.status_code != 200:  # search item not found?
+        #  print(res.status_code)  # debug
+        print(None)
+        return
+
+    #  res.json()['data']['children'][0]['data']['title']
+    if 'children' not in res.json()['data']:
+        print(None)
+        return
+
+    count = 0
+    for child in res.json()['data']['children']:
+        if count < 10:
+            print(child['data']['title'])
+            count += 1
+        else:
+            break
+    return
+
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) < 2:
+        print("Search argument required")
+        exit()
+    number_of_subscribers(sys.argv[1])
