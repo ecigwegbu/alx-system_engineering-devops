@@ -9,7 +9,7 @@ def number_of_subscribers(subreddit):
     headers = {'User-Agent': 'alx2-web-app'}
 
     url = f'https://www.reddit.com/r/{subreddit}/about.json'
-    res = requests.get(url, headers=headers)
+    res = requests.get(url, headers=headers, allow_redirects=False)
     if res.status_code != 200:  # search item not found?
         return 0
 
