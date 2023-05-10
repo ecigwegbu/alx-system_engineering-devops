@@ -7,8 +7,8 @@ If not a valid subreddit, print None.
 NOTE: Invalid subreddits may return a redirect to search results. Ensure that
 you are not following redirects
 """
-import requests
 import json
+import requests
 
 
 def number_of_subscribers(subreddit):
