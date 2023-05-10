@@ -12,7 +12,7 @@ import json
 
 
 def number_of_subscribers(subreddit):
-    """Read data from reddit API"""
+    """Read data from the reddit API"""
     myID = 'ajjYdzvjEiJSfunPCWQ6kg'
     myKey = '8iKEr-e6aowo2Dl8gJmvntRDPwIflw'
     auth = requests.auth.HTTPBasicAuth(myID, myKey)
