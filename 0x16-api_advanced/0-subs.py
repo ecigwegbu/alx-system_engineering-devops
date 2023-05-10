@@ -40,7 +40,3 @@ def number_of_subscribers(subreddit):
     for subreddit in res_dict:
         total += subreddit['numSubscribers']
     return total
-
-
-if __name__ == '__main__':
-    res = number_of_subscribers('programming')
