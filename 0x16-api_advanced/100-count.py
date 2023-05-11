@@ -37,3 +37,13 @@ if __name__ == "__main__":
         print("Search argument required")
         exit()
     top_ten(sys.argv[1])
+
+
+import re
+ 
+def split_sentence(sentence):
+    return re.findall(r'\b\w+\b', sentence)
+#Driver code
+sentence = 'Hello Geeks for geeks'
+print(split_sentence(sentence))
+#This code is contributed by Edula Vinay Kumar Reddy

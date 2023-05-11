@@ -20,7 +20,7 @@ def recurse(subreddit, hot_list=[], after=""):
 
     # build page list
     headers = {"User-Agent": "alx2-web-app"}
-    url = f"https://www.reddit.com/r/{subreddit}/hot.json{AFTER}"
+    url = "https://www.reddit.com/r/{}/hot.json{}".format(subreddit, AFTER)
     res = requests.get(url, headers=headers, allow_redirects=False)
     page_list = []
     if res.status_code != 200:
