@@ -5,8 +5,13 @@ import requests
 
 
 def recurse(subreddit, hot_list=[], after=""):
-    """ Queries the Reddit API and returns the number of subscribers """
-
+    """ Queries the Reddit API and returns the number of subscribers
+    based on a givenn subreddit:
+        Args:
+            subreddit (str):
+            hot_list (list): list of hot list items
+            after (str): next pagination indicator
+    """
     # Build the query string
     if after == "":
         AFTER = ""
