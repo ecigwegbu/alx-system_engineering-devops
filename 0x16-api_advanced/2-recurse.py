@@ -32,3 +32,11 @@ def recurse(subreddit, hot_list=[], after=""):
         return hot_list
 
     return recurse(subreddit, hot_list, after)
+
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) < 2:
+        print("Search argument required")
+        exit()
+    print(len(recurse(sys.argv[1])))

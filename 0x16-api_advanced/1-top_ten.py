@@ -36,4 +36,4 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         print("Search argument required")
         exit()
-    number_of_subscribers(sys.argv[1])
+    top_ten(sys.argv[1])
