@@ -1,17 +1,11 @@
 #!/usr/bin/python3
-""" Write a function that queries the Reddit API and returns the number of
-    subscribers (not active users, total subscribers) for a given subreddit.
-    If an invalid subreddit is given, the function should return 0
-"""
+""" Read data from the reddit API. """
 import json
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """ Queries the Reddit API and returns the number of subscribers
-        Args:
-            subreddit (str)
-    """
+    """ Queries the Reddit API and returns the number of subscribers """
     headers = {"User-Agent": "alx2-web-app"}
 
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
