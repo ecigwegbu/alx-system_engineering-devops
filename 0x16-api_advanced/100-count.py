@@ -4,46 +4,43 @@ import json
 import requests
 
 
-def def count_words(subreddit, word_list):
-    """ Queries the Reddit API and returns the number of subscribers """
+def count_words(subreddit, word_list):
+    """ Queries the Reddit API and returns the count of given words
+    based on a givenn subreddit and word list:
+        Args:
+            subreddit (str):
+            word_list (list): word list
+    """
+    # Build the query string
+    if after == "":
+        AFTER = ""
+    else:
+        AFTER = "?after={}".format(after)
+
+    # build page list
     headers = {"User-Agent": "alx2-web-app"}
-
-    #  GET [/r/subreddit]/hot
-    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json{}".format(subreddit, AFTER)
     res = requests.get(url, headers=headers, allow_redirects=False)
-    if res.status_code != 200:  # search item not found?
-        #  print(res.status_code)  # debug
-        print(None)
-        return
+    page_list = []
+    if res.status_code != 200:
+        return None
+    if "children" in res.json()["data"]:
+        for child in res.json()["data"]["children"]:
+            page_list.append(child["data"]["title"])
 
-    #  res.json()["data"]["children"][0]["data"]["title"]
-    if "children" not in res.json()["data"]:
-        print(None)
-        return
+    hot_list += page_list
+    if "after" not in res.json()["data"]:
+        return hot_list
+    after = res.json()["data"]["after"]
+    if after is None:
+        return hot_list
 
-    count = 0
-    for child in res.json()["data"]["children"]:
-        if count < 10:
-            print(child["data"]["title"])
-            count += 1
-        else:
-            break
-    return
+    return recurse(subreddit, hot_list, after)
 
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         print("Search argument required")
         exit()
-    top_ten(sys.argv[1])
-
-
-import re
- 
-def split_sentence(sentence):
-    return re.findall(r'\b\w+\b', sentence)
-#Driver code
-sentence = 'Hello Geeks for geeks'
-print(split_sentence(sentence))
-#This code is contributed by Edula Vinay Kumar Reddy
+    print(len(count_words(sys.argv[1]), sys.argv[2]))
