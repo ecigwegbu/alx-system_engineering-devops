@@ -1,11 +1,22 @@
 #!/usr/bin/python3
-""" Read data from the reddit API. """
+""" A function that reads data from the reddit API and returns the number
+of subscribers for a given subreddit.
+    Args:
+        subreddit (str)
+        example: "programming"
+        passed to command line
+"""
 import json
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """ Queries the Reddit API and returns the number of subscribers """
+    """ Queries the Reddit API and returns the number of subscribers
+    for a given subreddit, such as programming
+        Args:
+            subreddit (str)
+            example: "programming"
+    """
     headers = {"User-Agent": "alx2-web-app"}
 
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
