@@ -1,12 +1,5 @@
 #!/usr/bin/python3
-# This script imports reddidt API data
-""" A function that reads data from the reddit API and returns the number
-of subscribers for a given subreddit.
-    Args:
-        subreddit (str)
-        example: "programming"
-        passed to command line
-"""
+""" Read data from the reddit API. """
 import json
 import requests
 
