@@ -1,5 +1,6 @@
 # Sysemd configuration file to:
 # start gunicorn on boot up and serve flask app server
+# --env HBNB_MYSQL_USER=hbnb_dev HBNB_MYSQL_PWD=hbnb_dev_pwd HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_dev_db HBNB_TYPE_STORAGE=db HBNB_ENV=dev
 
 [Unit]
 Description=Gunicorn instance to serve myapp
@@ -9,6 +10,7 @@ After=network.target
 User=ubuntu
 Group=www-data
 WorkingDirectory=/home/ubuntu/AirBnB_clone_v4
+Environment="HBNB_MYSQL_USER=hbnb_dev" "HBNB_MYSQL_PWD=hbnb_dev_pwd" "HBNB_MYSQL_HOST=localhost" "HBNB_MYSQL_DB=hbnb_dev_db" "HBNB_TYPE_STORAGE=db" "HBNB_ENV=dev"
 ExecStart=/home/ubuntu/.local/bin/gunicorn --workers 3 --bind 127.0.0.1:5003 --log-file /tmp/airbnb-error.log --access-logfile /tmp/airbnb-access.log web_dynamic.2-hbnb:app
 
 [Install]
