@@ -1,2 +1,17 @@
-# Config file: deploy it!
-#
+# Systemd configuration file to:
+# start gunicorn on boot up and serve flask app server
+
+[Unit]
+Description=Gunicorn instance to serve myapp
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v2/web_flask
+ExecStart=/home/ubuntu/.local/bin/gunicorn --workers 3 --bind 0.0.0.0:5003 web_dynamic.2-hbnb:app
+errorlog=/tmp/airbnb-error.log
+accesslog=/tmp/airbnb-access.log
+
+[Install]
+WantedBy=multi-user.target#
