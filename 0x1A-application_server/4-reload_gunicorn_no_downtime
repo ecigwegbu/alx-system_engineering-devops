@@ -1,2 +1,2 @@
-# Config file: 7. No service interruption
-#
+#!/usr/bin/env bash
+#Bash script to reload Gunicorn in a graceful way
