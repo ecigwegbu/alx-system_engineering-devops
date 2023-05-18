@@ -1,2 +1,54 @@
-# Config file: 5. Serve your AirBnB clone
-#
+##
+# ALX Task 5. Serve a dynmaic website with Nginx
+##
+server {
+        listen 80 default_server;
+        server_name _;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        add_header X-Served-By 158178-web-01 always;
+        rewrite /redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4
+                permanent;
+
+        location /airbnb-onepage/ {
+                include proxy_params;
+                proxy_pass http://127.0.0.1:5000;
+        }
+
+        location ~ ^/airbnb-dynamic/number_odd_or_even/[0-9]* {
+                include proxy_params;
+                rewrite ^/airbnb-dynamic(/number_odd_or_even/[0-9]*) $1 break;
+                proxy_pass http://127.0.0.1:5001;
+        }
+
+
+        location /api/ {
+                include proxy_params;
+                proxy_pass http://127.0.0.1:5002;
+        }
+
+        location / {
+                include proxy_params;
+                proxy_pass http://127.0.0.1:5003;
+        }
+
+        location /static/ {
+                root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
+                try_files $uri $uri/ =404;
+        }
+
+        #location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+        #       try_files $uri $uri/ =404;
+        #}
+
+
+        location /hbnb_static/ {
+                alias /data/web_static/current/;
+        }
+}
