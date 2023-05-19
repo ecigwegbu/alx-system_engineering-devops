@@ -36,20 +36,21 @@ server {
         #       proxy_pass http://127.0.0.1:5003;
         #}
 
-        #location /static/ {
-        #       root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
-        #       try_files $uri $uri/ =404;
-        #}
+        location /static/ {
+               root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
+               try_files $uri $uri/ =404;
+        }
 
         # path for static files
-        root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
 
         location / {
         # if static file not found, proxy
-              try_files $uri @app_proxy;
+        #      root /home/ubuntu/AirBnB_clone_v4/web_dynamic/;
+              proxy_pass http://127.0.0.1:5003/2-hbnb/;
+              # try_files $uri @app_proxy;
         }
 
-        location @app_proxy {
+        location /2-hbnb/ {
                 proxy_redirect off;
                 proxy_pass http://127.0.0.1:5003;
         }
