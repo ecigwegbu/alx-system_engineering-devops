@@ -4,7 +4,7 @@
 # ab -c 10 -n 2000 localhost/ | grep 'Failed requests:'
 
 # ULIMIT="-n 15"
-file { '/root/nginx':
+file { '/etc/default/nginx':
   ensure  => file,
   content => 'ULIMIT="-n 256"',
 }
