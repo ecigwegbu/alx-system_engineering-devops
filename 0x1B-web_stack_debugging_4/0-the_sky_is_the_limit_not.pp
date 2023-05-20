@@ -2,6 +2,6 @@
 # server with 100 requests at a time
 
 exec { 'update_ulimit':
-  command => '/bin/sed -i -E "s/^(ULIMIT=.*)$/ULIMIT=\"-n 256\"/g" \
+  command => '/bin/sed -i -E "s/^(ULIMIT=.*)$/ULIMIT=\"-n 8192\"/g" \
   /etc/default/nginx',
 }
