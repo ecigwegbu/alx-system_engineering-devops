@@ -1,10 +1,5 @@
-# Puppet manifest to stop apache benchmark error on nginx server.
-# Increase the ULIMIT default value in /etc/default/nginx
-# Determine dthat 256 is good for up to 2000 requests @ 100 concur.
-# ab -c 10 -n 2000 localhost/ | grep 'Failed requests:'
+# Set ULIMIT to make 2000 requests to my server with 100 requests at a time
 
-# ULIMIT="-n 15"
-file { '/etc/default/nginx':
-  ensure  => file,
-  content => 'ULIMIT="-n 4096"',
+exec { "update_ulimit":
+  command => '/bin/sed -i "s/n 15/n 2048/g" /etc/default/nginx',
 }
