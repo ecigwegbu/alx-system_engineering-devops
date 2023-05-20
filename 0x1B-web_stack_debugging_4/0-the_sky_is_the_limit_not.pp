@@ -6,5 +6,5 @@
 # ULIMIT="-n 15"
 file { '/etc/default/nginx':
   ensure  => file,
-  content => 'ULIMIT="-n 256"',
+  content => 'ULIMIT="-n 4096"',
 }
