@@ -8,5 +8,5 @@ exec { 'update_ulimit':
 
 # Reload the nginx configuration
 -> exec { 'reload_nginx':
-  command => '/usr/sbin/service nginx reload',
+  command => '/usr/sbin/service nginx restart',
 }
